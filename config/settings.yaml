@@ -1,0 +1,36 @@
+# HNX26PSI10 configuration
+server:
+  host: 127.0.0.1
+  port: 8000
+uploads:
+  max_bytes: 524288000   # 500 MB
+  dir: data/uploads
+results:
+  dir: data/results
+video:
+  sample_fps: 2          # frames analyzed per second of video
+  max_frames: 120        # safety cap
+  max_side: 640          # downscale for analysis
+image:
+  max_side: 1024
+audio:
+  sample_rate: 16000
+  max_seconds: 180
+scoring:
+  # weights must roughly sum to 1 across available signals;
+  # the engine renormalises over signals that actually produced evidence
+  weights:
+    metadata: 0.05
+    compression: 0.15
+    noise: 0.15
+    image_stats: 0.10
+    face: 0.15
+    deepfake_model: 0.20
+    temporal: 0.20
+    audio: 0.25
+    cross_modal: 0.15
+  verdict:
+    real_threshold: 68        # score >= this -> Likely Real
+    fake_threshold: 38        # score <= this -> Likely Manipulated
+  confidence:
+    low_margin: 12            # score distance from thresholds below which confidence drops
